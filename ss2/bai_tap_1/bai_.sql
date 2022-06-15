@@ -1,4 +1,6 @@
-create database if not exists chuyen_doi_erd;
+drop database if  exists chuyen_doi_erd;
+
+create database chuyen_doi_erd;
 
 use chuyen_doi_erd;
 
@@ -35,20 +37,20 @@ foreign key(ma_vat_tu) references vat_tu(ma_vat_tu),
 foreign key(so_dh) references don_dh(so_dh)
 );
 
-create table sdt(
-sdt int,
-ma_ncc int primary key
-);
-
 create table nha_cung_cap(
 so_dh int ,
 ma_ncc int,
 ten_ncc varchar(50),
 dia_chi varchar(50),
 primary key(ma_ncc),
-id_sdt int,
-foreign key(so_dh) references don_dh(so_dh),
-foreign key(id_sdt) references sdt(ma_ncc)
+foreign key(so_dh) references don_dh(so_dh)
+);
+
+create table sdt(
+sdt varchar(11),
+ma_ncc int,
+primary key (sdt),
+foreign key (ma_ncc) references nha_cung_cap(ma_ncc)
 );
 
 create table phieu_nhap(
