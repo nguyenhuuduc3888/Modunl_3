@@ -36,7 +36,7 @@ select o.o_id,o.o_date,sum(od_qty*p_price)
 from `order` o 
 join orderdetail odt on o.o_id=odt.o_id
 join product p on odt.p_id=p.p_id
-group by odt.o_id;
+group by o_id;
 
 
 
