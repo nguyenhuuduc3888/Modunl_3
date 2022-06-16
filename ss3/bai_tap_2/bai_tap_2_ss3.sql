@@ -32,7 +32,7 @@ from customer c
 left join  `order` o on c.c_id=o.c_id
 group by c_id  having count(o.c_id)=0;
 
-select o.o_id,o.o_date,sum(od_qty*p_price) 
+select o.o_id,o.o_date,sum(od_qty*p_price) as tong_tien
 from `order` o 
 join orderdetail odt on o.o_id=odt.o_id
 join product p on odt.p_id=p.p_id
