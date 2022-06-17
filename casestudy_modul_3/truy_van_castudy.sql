@@ -53,8 +53,13 @@ group by dv.id_dich_vu);
  from dich_vu dv 
  join loai_dich_vu ldv on dv.id_loai_dich_vu = ldv.id_loai_dich_vu
  join hop_dong hd on dv.id_dich_vu = hd.id_dich_vu
- where year(ngay_lam_hop_dong)=2020
- group by dv.id_dich_vu;
+ group by dv.id_dich_vu
+ having dv.id_dich_vu not in
+(select dv.id_dich_vu
+from dich_vu dv
+join loai_dich_vu ldv on dv.id_loai_dich_vu = ldv.id_loai_dich_vu
+join hop_dong hd on dv.id_dich_vu = hd.id_dich_vu
+where year(ngay_lam_hop_dong) =2021);
 
 -- task 8 cach 1
 select distinct ho_ten from khach_hang;
@@ -69,8 +74,7 @@ select ho_ten from khach_hang;
 -- task 9 Thực hiện thống kê doanh thu theo tháng, nghĩa là tương ứng với mỗi tháng
 -- trong năm 2021 thì sẽ có bao nhiêu khách hàng thực hiện đặt phòng.
 select month(ngay_lam_hop_dong) as thang ,count(hd.id_khach_hang) as so_lan_dat_phong_trong_thang
-from khach_hang kh
-join hop_dong hd on kh.id_khach_hang=hd.id_khach_hang
+from hop_dong hd
 where  year (ngay_lam_hop_dong)=2021
 group by thang
 order by ngay_lam_hop_dong;
@@ -101,11 +105,10 @@ order by ngay_lam_hop_dong;
  -- của tất cả các dịch vụ đã từng được khách hàng đặt vào 3 tháng cuối năm 2020 nhưng chưa từng được khách hàng đặt vào 6 tháng đầu năm 2021.
  select hd.id_hop_dong,nv.ho_ten as ho_ten_nhan_vien,kh.ho_ten,kh.sdt,dv.id_dich_vu,dv.ten_dich_vu,sum(ifnull(hdct.so_luong,0)) as so_luong_dich_vu_di_kem,hd.tien_coc
  from hop_dong hd
- left join nhan_vien nv  on hd.id_nhan_vien  = nv.id_nhan_vien
- left join khach_hang kh on hd.id_khach_hang = kh.id_khach_hang
- left join dich_vu dv    on hd.id_dich_vu    = dv.id_dich_vu
- left join hop_dong_chi_tiet hdct on hd.id_hop_dong = hdct.id_hop_dong
- left join dich_vu_di_kem dvdk    on hdct.id_dich_vu_di_kem = dvdk.id_dich_vu_di_kem
+  join nhan_vien nv  on hd.id_nhan_vien  = nv.id_nhan_vien
+  join khach_hang kh on hd.id_khach_hang = kh.id_khach_hang
+  join dich_vu dv    on hd.id_dich_vu    = dv.id_dich_vu
+  join hop_dong_chi_tiet hdct on hd.id_hop_dong = hdct.id_hop_dong
  where (month(ngay_lam_hop_dong) between 10 and 12)  and year(ngay_lam_hop_dong)=2020
  group by hd.id_hop_dong;
  
@@ -139,17 +142,30 @@ group by id_nhan_vien
 having count(hd.id_hop_dong) <=3;
 
 -- task 16 Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2019 đến năm 2021.
-
--- task 17 17.	Cập nhật thông tin những khách hàng có ten_loai_khach từ Platinum lên Diamond,
+update  nhan_vien nv
+set `check` = 1
+where nv.id_nhan_vien in (
+select*from (select nv.id_nhan_vien from hop_dong hd
+right join nhan_vien nv on hd.id_nhan_vien = nv.id_nhan_vien
+right join trinh_do td  on nv.id_trinh_do  = td.id_trinh_do
+right join bo_phan bp    on nv.id_bo_phan    = bp.id_bo_phan
+group by id_nhan_vien
+having count(hd.id_hop_dong) =0 ) temp
+);
+-- task 17 Cập nhật thông tin những khách hàng có ten_loai_khach từ Platinum lên Diamond,
 -- chỉ cập nhật những khách hàng đã từng đặt phòng với Tổng Tiền thanh toán trong năm 2021 là lớn hơn 10.000.000 VNĐ.
-select kh.ho_ten,lk.ten_loai_khach, ifnull(chi_phi_thue,0)+ ifnull (so_luong*gia,0) as tong_tien
+select kh.ho_ten,lk.ten_loai_khach,hd.ngay_lam_hop_dong,ifnull(chi_phi_thue,0)+ ifnull (so_luong*gia,0) as tong_tien
 from khach_hang kh 
 left join loai_khach lk  on kh.id_loai_khach=lk.id_loai_khach
 left join hop_dong hd on kh.id_khach_hang=hd.id_khach_hang
 left join dich_vu dv on hd.id_dich_vu=dv.id_dich_vu
 left join hop_dong_chi_tiet hdct on hd.id_hop_dong=hdct.id_hop_dong
 left join dich_vu_di_kem dvdk on hdct.id_dich_vu_di_kem=dvdk.id_dich_vu_di_kem
-where year(ngay_ket_thuc_hop_dong) =2021 and (ifnull(dv.chi_phi_thue,0)+ ifnull (hdct.so_luong*dvdk.gia,0)>10000000)
+where year(ngay_ket_thuc_hop_dong) =2021 
+group by lk.ten_loai_khach
+-- and (ifnull(dv.chi_phi_thue,0)+ ifnull (hdct.so_luong*dvdk.gia,0)>10000000)
+
+
 
 
 
