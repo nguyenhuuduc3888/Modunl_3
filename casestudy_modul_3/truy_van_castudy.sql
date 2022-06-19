@@ -157,7 +157,7 @@ having count(hd.id_hop_dong) =0 ) temp
 update khach_hang kh set kh.id_loai_khach= 1
 where kh.id_khach_hang in(
 select*from (
-select kh.id_khach_hang,kh.ho_ten,lk.ten_loai_khach
+select kh.id_khach_hang
 from khach_hang kh 
 left join loai_khach lk  on kh.id_loai_khach=lk.id_loai_khach
 left join hop_dong hd on kh.id_khach_hang=hd.id_khach_hang
