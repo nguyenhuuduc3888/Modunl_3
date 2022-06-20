@@ -180,9 +180,10 @@ update dich_vu_di_kem dvdk set dvdk.gia=dvdk.gia*2
 where dvdk.id_dich_vu_di_kem in(
 select*from(
 select dvdk.id_dich_vu_di_kem
- from hop_dong_chi_tiet hdct
+ from hop_dong hd
+ join hop_dong_chi_tiet hdct on hd.id_hop_dong = hdct.id_hop_dong
  join dich_vu_di_kem dvdk on hdct.id_dich_vu_di_kem = dvdk.id_dich_vu_di_kem
- where hdct.so_luong >10 )temp);
+ where hdct.so_luong >10 and year(ngay_lam_hop_dong)=2020 )temp);
  
 -- task 20 	Hiển thị thông tin của tất cả các nhân viên và khách hàng có trong hệ thống, thông tin hiển thị bao gồm id 
 -- (ma_nhan_vien, ma_khach_hang), ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi.

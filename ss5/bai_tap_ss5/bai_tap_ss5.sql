@@ -24,7 +24,7 @@ INSERT INTO products ( `ma_san_pham`, `ten_san_pham`, `gia_san_pham`, `so_luong_
 -- Tạo Unique Index trên bảng Products (sử dụng cột productCode để tạo chỉ mục)
 create index index_1 on products(ma_san_pham);
 
--- Tạo Composite Index trên bảng Products (sử dụng 2 cột productName và productPrice)
+-- Tạo Composite Index trêproductsindex_1n bảng Products (sử dụng 2 cột productName và productPrice)
 create index index_2 on products(ten_san_pham,gia_san_pham);
 
 -- Tạo view lấy về các thông tin: productCode, productName, productPrice, productStatus từ bảng products.
@@ -82,8 +82,7 @@ update products
      where `id`= id_product;
 end
 //delimiter ;
- call product_update(3,3,'jhj',11,11,'ff','gg');
- call product_all;
+
 -- Tạo store procedure xoá sản phẩm theo id
 delimiter //
 create procedure product_detele(
