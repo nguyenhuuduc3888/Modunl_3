@@ -193,8 +193,8 @@ select id_khach_hang,kh.ho_ten,kh.email,kh.sdt,kh.ngay_sinh,kh.dia_chi from khac
 
 -- task 21 Tạo khung nhìn có tên là v_nhan_vien để lấy được thông tin của tất cả các nhân viên có địa chỉ là “Hải Châu” 
 -- và đã từng lập hợp đồng cho một hoặc nhiều khách hàng bất kì với ngày lập hợp đồng là “12/12/2019”.
-create view view_nhan_vien 
-as select*from nhan_vien nv
+create view view_nhan_vien
+as select nv.* from nhan_vien nv
 join hop_dong hd on nv.id_nhan_vien = hd.id_nhan_vien
 where nv.dia_chi like '%Hải Châu%' and ngay_lam_hop_dong=12/12/2019;
 
