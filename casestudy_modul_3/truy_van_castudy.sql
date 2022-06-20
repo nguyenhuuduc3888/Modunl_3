@@ -142,16 +142,15 @@ group by id_nhan_vien
 having count(hd.id_hop_dong) <=3;
 
 -- task 16 Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2019 đến năm 2021.
-update  nhan_vien nv
-set `check` = 1
+update  nhan_vien nv set `check` = 1
 where nv.id_nhan_vien in (
 select*from (select nv.id_nhan_vien from hop_dong hd
 right join nhan_vien nv on hd.id_nhan_vien = nv.id_nhan_vien
 right join trinh_do td  on nv.id_trinh_do  = td.id_trinh_do
 right join bo_phan bp    on nv.id_bo_phan    = bp.id_bo_phan
 group by id_nhan_vien
-having count(hd.id_hop_dong) =0 ) temp
-);
+having count(hd.id_hop_dong) =0 ) temp);
+
 -- task 17 Cập nhật thông tin những khách hàng có ten_loai_khach từ Platinum lên Diamond,
 -- chỉ cập nhật những khách hàng đã từng đặt phòng với Tổng Tiền thanh toán trong năm 2021 là lớn hơn 10.000.000 VNĐ.
 update khach_hang kh set kh.id_loai_khach= 1
@@ -229,6 +228,11 @@ insert into hop_dong(`ngay_lam_hop_dong`,`ngay_ket_thuc_hop_dong`,`tien coc`,`id
 values (ngay_lam_hop_dong,ngay_ket_thuc_hop_dong,tien_coc,id_nhan_vien,id_khach_hang,id_dich_vu);
 end
 //delimiter ;
+
+
+
+
+
 
 
 

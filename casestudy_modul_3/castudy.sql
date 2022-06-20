@@ -30,6 +30,7 @@ dia_chi varchar(45),
 id_vi_tri int,
 id_trinh_do int,
 id_bo_phan int,
+`check` bit(1) default 0,
 foreign key(id_vi_tri)references vi_tri(id_vi_tri),
 foreign key(id_trinh_do)references trinh_do(id_trinh_do),
 foreign key(id_bo_phan)references bo_phan(id_bo_phan)
@@ -50,6 +51,7 @@ sdt varchar(45),
 email varchar(45),
 dia_chi varchar(45),
 id_loai_khach int,
+`check` bit(1) default 0,
 foreign key(id_loai_khach)references loai_khach(id_loai_khach)
 );
 
@@ -75,6 +77,7 @@ dien_tich_ho_boi double,
 so_tang int,
 id_kieu_thue int,
 id_loai_dich_vu int,
+`check` bit(1) default 0,
 foreign key(id_kieu_thue)references kieu_thue(id_kieu_thue),
 foreign key(id_loai_dich_vu)references loai_dich_vu(id_loai_dich_vu)
 );
@@ -87,6 +90,7 @@ tien_coc double,
 id_nhan_vien int,
 id_khach_hang int,
 id_dich_vu int,
+`check` bit(1) default 0,
 foreign key(id_nhan_vien)references nhan_vien(id_nhan_vien),
 foreign key(id_khach_hang)references khach_hang(id_khach_hang),
 foreign key(id_dich_vu)references dich_vu(id_dich_vu)
