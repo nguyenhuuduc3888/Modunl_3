@@ -165,8 +165,7 @@ left join dich_vu dv on hd.id_dich_vu=dv.id_dich_vu
 left join hop_dong_chi_tiet hdct on hd.id_hop_dong=hdct.id_hop_dong
 left join dich_vu_di_kem dvdk on hdct.id_dich_vu_di_kem=dvdk.id_dich_vu_di_kem
 where year(ngay_ket_thuc_hop_dong) =2021 and  ifnull(dv.chi_phi_thue,0)+ ifnull (hdct.so_luong*dvdk.gia,0)>10000000
-group by lk.ten_loai_khach  having lk.ten_loai_khach= 'Platinium' )temp)
-;
+group by kh.id_khach_hang  having kh.id_khach_hang= 2 )temp);
 
 -- task 18 Xóa những khách hàng có hợp đồng trước năm 2021 (chú ý ràng buộc giữa các bảng).
 update khach_hang kh set `check`=1
@@ -240,7 +239,8 @@ on hop_dong for each row
 begin
     declare so_luong int;
     select count(*) into so_luong from hop_dong where `check`=0;
-    insert into  so_luong_hop_dong(ngay,so_luong_hop_dong) values (now(),so_luong);
+    insert into  so_luong_hop_dong(ngay,so_luong_hop_dong) values (date(now()),so_luong);
+    
 end //
 delimiter ;
  
@@ -249,9 +249,10 @@ id int primary key auto_increment,
 ngay date,
 so_luong_hop_dong int);
 
-update hop_dong set `check`=1
-where id_hop_dong=2
-
+-- task 26 Tạo Trigger có tên tr_cap_nhat_hop_dong khi cập nhật ngày kết thúc hợp đồng, cần kiểm tra xem thời gian cập nhật 
+-- có phù hợp hay không, với quy tắc sau: Ngày kết thúc hợp đồng phải lớn hơn ngày làm hợp đồng ít nhất là 2 ngày.
+-- Nếu dữ liệu hợp lệ thì cho phép cập nhật, nếu dữ liệu không hợp lệ thì in ra thông báo “Ngày kết thúc hợp đồng phải lớn hơn 
+-- ngày làm hợp đồng ít nhất là 2 ngày” trên console của database.
 
 
 

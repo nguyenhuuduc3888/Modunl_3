@@ -1,6 +1,10 @@
 #tieu_de {
     text-align: center;
     color: yellow;
+    width: 100%;
+    height: 10%;
+    background-color: #cccccc;
+    border-radius: 20px;
 }
 
 pre {
@@ -16,24 +20,23 @@ div {
 }
 
 body {
-    background-image: url("https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/245602555_418074463080708_2379152686037751261_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=EvzMTH1XQyIAX-IaCyQ&_nc_ht=scontent.fsgn2-6.fna&oh=00_AT9pXtY_qY55L1TLMgeoT7bjR5P49qzlS0iJ6IN8QPMkGg&oe=62B54877");
-    background-repeat: repeat-x;
+    background-image: linear-gradient(to right, navajowhite, yellow);
 }
 
-img {
+
+#div_menu img {
+    width: 100px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: cornflowerblue;
+}
+
+
+.n {
+    border-radius: 20px;
     width: 100%;
-    height: 100px;
-}
-
-#div_menu {
-    width: 20%;
-    height: 20%;
-}
-
-#noi_dung {
-    width: 100%;
-    height: 70%;
-    float: left;
+    height: 50%;
+    background-color: olivedrab;
 }
 
 #div_tong {
@@ -45,20 +48,22 @@ img {
 a {
     color: gold;
     font-weight: bold;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 h2 {
     color: blanchedalmond;
 }
 
- #div_menu li, a,  img {
-     list-style-type: none;
-     display: inline;
+#line1, #line2, #line3 {
+    text-align: center;
 }
 
- #line1, #line2, #line3{
-     text-align: center;
- }
+#c1, #c2, #c3 {
+    width: 32%;
+    height: 100%;
+}
 
-
+a:hover {
+    color: cornflowerblue;
+}
