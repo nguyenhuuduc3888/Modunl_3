@@ -53,6 +53,7 @@ group by dv.id_dich_vu);
  from dich_vu dv 
  join loai_dich_vu ldv on dv.id_loai_dich_vu = ldv.id_loai_dich_vu
  join hop_dong hd on dv.id_dich_vu = hd.id_dich_vu
+ where year(ngay_lam_hop_dong)=2020
  group by dv.id_dich_vu
  having dv.id_dich_vu not in
 (select dv.id_dich_vu
@@ -228,7 +229,28 @@ begin
 insert into hop_dong(`ngay_lam_hop_dong`,`ngay_ket_thuc_hop_dong`,`tien coc`,`id_nhan_vien`,`id_khach_hang`,`id_dich_vu`)
 values (ngay_lam_hop_dong,ngay_ket_thuc_hop_dong,tien_coc,id_nhan_vien,id_khach_hang,id_dich_vu);
 end
-//delimiter ;
+
+-- task 25 Tạo Trigger có tên tr_xoa_hop_dong khi xóa bản ghi trong bảng hop_dong thì hiển thị tổng số lượng bản ghi còn lại có
+-- trong bảng hop_dong ra giao diện console của database
+-- Lưu ý: Đối với MySQL thì sử dụng SIGNAL hoặc ghi log thay cho việc ghi ở
+delimiter //
+create trigger  tr_xoa_hop_dong 
+after update 
+on hop_dong for each row
+begin
+    declare so_luong int;
+    select count(*) into so_luong from hop_dong where `check`=0;
+    insert into  so_luong_hop_dong(ngay,so_luong_hop_dong) values (now(),so_luong);
+end //
+delimiter ;
+ 
+create table so_luong_hop_dong(
+id int primary key auto_increment,
+ngay date,
+so_luong_hop_dong int);
+
+update hop_dong set `check`=1
+where id_hop_dong=2
 
 
 

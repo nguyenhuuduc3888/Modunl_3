@@ -2,12 +2,8 @@
     text-align: center;
     color: yellow;
 }
-#tieu_de_h1{
-    width: auto;
-    height: 10%;
-    background-color: aqua;
-}
-pre{
+
+pre {
     font-size: 15px;
     text-align: left;
     color: gold;
@@ -15,39 +11,54 @@ pre{
     font-weight: bold;
 }
 
-div{
+div {
     color: gold;
 }
 
-body{
+body {
     background-image: url("https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/245602555_418074463080708_2379152686037751261_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=EvzMTH1XQyIAX-IaCyQ&_nc_ht=scontent.fsgn2-6.fna&oh=00_AT9pXtY_qY55L1TLMgeoT7bjR5P49qzlS0iJ6IN8QPMkGg&oe=62B54877");
     background-repeat: repeat-x;
 }
 
-img{
+img {
     width: 100%;
-    height:100px ;
+    height: 100px;
 }
-#div_menu{
+
+#div_menu {
     width: 20%;
     height: 20%;
-
 }
 
-#noi_dung{
+#noi_dung {
     width: 100%;
     height: 70%;
     float: left;
 }
-#div_tong{
+
+#div_tong {
     width: 100%;
     height: 100%;
 
 }
-a{
+
+a {
     color: gold;
     font-weight: bold;
+    text-decoration:none;
 }
-h4 {
-color: blanchedalmond;
+
+h2 {
+    color: blanchedalmond;
 }
+
+ #div_menu li, a,  img {
+     list-style-type: none;
+     display: inline;
+}
+
+ #line1, #line2, #line3{
+     text-align: center;
+ }
+
+
