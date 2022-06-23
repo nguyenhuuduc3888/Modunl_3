@@ -126,17 +126,12 @@ span:hover{
 
 
 @media only screen and ( max-width: 768px ){
-*{
-    box-sizing: border-box;
-}
 
-body{
-    overflow-x: hidden;
-}
 .row {
-    display: flex;
+
     flex-wrap: wrap;
 }
+
 
 .col-1 {
     width: 8.33%;
@@ -200,7 +195,6 @@ body{
 span {
     align-items: center;
     text-align: center;
-    margin: 10px;
 }
 span:hover{
     color: chocolate;
@@ -208,7 +202,6 @@ span:hover{
 
 .header {
     width: 100%;
-    height: 40px;
     background-color: #222222;
     color: white;
     align-items: center;
@@ -222,21 +215,24 @@ span:hover{
     width: 70%;
     margin-left: 100px;
     align-items: center;
-    display: flex;
 }
 
 .mid{
     height: 527px;
 }
 .left_mid{
+    width: 100%;
     background-color: yellow;
 }
 .right-mid{
+    width: 100%;
     background-color: yellowgreen;
+}
+.mid-mid{
+    width: 100%;
 }
 .ads {
     width: 80%;
-    height: 80px;
     padding: 20px 20px;
     background-color: blue;
     margin: 20px 20px;
@@ -247,6 +243,5 @@ span:hover{
     clear: both;
     color: white;
     text-align: center;
-    height: 30px;
 }
 }
