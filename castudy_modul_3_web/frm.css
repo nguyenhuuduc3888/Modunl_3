@@ -1,0 +1,36 @@
+.right {
+    margin-left: 75%;
+}
+.footer{
+    clear: both;
+}
+.menu{
+    background-color: #0d6efd;
+    color: white !important;
+}
+*{
+    box-sizing: border-box !important;
+}
+.left-center{
+    height: 100%;
+}
+.right-center{
+    height: 100%;
+    border-radius: 20px;
+}
+ul li:hover{
+    background-color: chocolate;
+    color: white;
+}
+body{
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRER-SUORn-A19RXc5_i9trJrr2Iys-pKNQDQ&usqp=CAU");
+    background-size: cover;
+}
+img {
+    width: border-box;
+    height: border-box;
+}
+
+.header{
+    color: white;
+}
