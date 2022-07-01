@@ -6,17 +6,26 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserRepository {
-    public void insertUser(User user) throws SQLException;
+    void insertUser(User user) throws SQLException;
 
-    public User selectUser(int id);
+    User selectUser(int id);
 
-    public List<User> selectAllUser();
+    boolean deleteUser(int id) throws SQLException;
 
-    public boolean deleteUser(int id) throws SQLException;
-
-    public boolean updateUser(User user) throws SQLException;
+    boolean updateUser(User user) throws SQLException;
 
     List<User> findByCountry(String country);
 
+    List<User> findByName(String name);
+
+    List<User> sort(String name);
+
+    List<User> selectAllUser();
+
+    List<User> viewAll();
+
+    void updateSp(User user);
+
+    void deleteSp(int id);
 
 }

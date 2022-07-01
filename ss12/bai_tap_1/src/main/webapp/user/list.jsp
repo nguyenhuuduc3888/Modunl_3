@@ -8,20 +8,29 @@
 <body>
 <center>
     <h1>User Manager</h1>
-    <h2><a href="/users?action=sort"> sort by name</a></h2>
+    <h2>
+        <a href="users?action=users">List All Users</a>
+    </h2>
+    <h2>
+        <a href="/users?action=sort"> Sort By Name</a>
+    </h2>
+    <h2>
+        <a href="/users?action=create"> Add New User</a>
+    </h2>
     <form action="/users">
         <input type="text" name="country">
         <input type="submit" name="action" value="findByCountry">
     </form>
 
-    <h2>
-        <a href="/users?action=create"> Add New User</a>
-    </h2>
+    <form action="/users">
+        <input type="text" name="name">
+        <input type="submit" name="action" value="findByName">
+    </form>
 </center>
 <div align="center">
     <table border="1" cellpadding="5">
         <caption>
-            <h2>List of Users</h2>
+            <h2>Danh sách User</h2>
         </caption>
         <tr>
             <th>ID</th>

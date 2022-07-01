@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements IUserRepository {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/demo?useSSL=false";
+    private String jdbcURL = "jdbc:mysql://localhost:3306/demo";
     private String jdbcUsername = "root";
     private String jdbcPassword = "ducthuy1997";
 
@@ -18,6 +18,11 @@ public class UserRepository implements IUserRepository {
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
     private static final String SEARCH_USER_BY_COUNTRY = "SELECT * FROM users where country like ? ";
     private static final String SORT_USER_BY_NAME = "SELECT * FROM users  order by name";
+    private static final String SEARCH_USER_BY_NAME = "SELECT * FROM users where name like ? ";
+    private static final String SP_FIND_ALL_USER = "CALL  sp_fin_all_user()";
+    private static final String UPDATE_SP_USER = "CALL sp_edit_user(?,?,?,?) ";
+    private static final String DELETE_SP_USER = "CALL sp_delete_user(?)";
+
 
     public UserRepository() {
     }
@@ -91,7 +96,6 @@ public class UserRepository implements IUserRepository {
         List<User> users = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
-            System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -153,6 +157,27 @@ public class UserRepository implements IUserRepository {
         return users;
     }
 
+    @Override
+    public List<User> findByName(String name) {
+        List<User> users = new ArrayList<>();
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_USER_BY_NAME);
+            preparedStatement.setString(1, "%" + name + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String country = resultSet.getString("country");
+                users.add(new User(id, name, email, country));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return users;
+    }
+
     public List<User> sort(String name) {
         List<User> users = new ArrayList<>();
         try {
@@ -171,5 +196,53 @@ public class UserRepository implements IUserRepository {
         }
         return users;
     }
-}
 
+    //Gọi Stored Procedures từ JDBC sử dụng CallableStatement cho chức năng hiển thị danh sách users
+    public List<User> viewAll() {
+        List<User> users = new ArrayList<>();
+        try {
+            Connection connection = getConnection();
+            CallableStatement callableStatement = connection.prepareCall(SP_FIND_ALL_USER);
+            ResultSet resultSet = callableStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String country = resultSet.getString("country");
+                users.add(new User(id, name, email, country));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return users;
+    }
+
+    //Gọi Stored Procedures từ JDBC sử dụng CallableStatement cho chức năng sửa thông tin user
+    @Override
+    public void updateSp(User user) {
+        try {
+            Connection connection = getConnection();
+            CallableStatement callableStatement = connection.prepareCall(UPDATE_SP_USER);
+            callableStatement.setInt(1, user.getId());
+            callableStatement.setString(2, user.getName());
+            callableStatement.setString(3, user.getEmail());
+            callableStatement.setString(4, user.getCountry());
+            callableStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+    }
+
+    @Override
+    public void deleteSp(int id) {
+        try {
+            Connection connection = getConnection();
+            CallableStatement callableStatement = connection.prepareCall(DELETE_SP_USER);
+            callableStatement.setInt(1, id);
+            callableStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+    }
+
+}
